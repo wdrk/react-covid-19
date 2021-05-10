@@ -7,6 +7,7 @@ const Contents = () => {
   // 배열 구조분해
   const [confirmedData, setConfirmedData] = useState({});
   const [quarantinedData, setQuarantinedData] = useState({});
+  const [comparedData, setComparedData] = useState({});
 
   // 클래스에서 마운트가 됐을 때 바로 메서드를 실행하는 효과를 위해 useEffect를 사용함
   // ! useEffect()에 두 번째 매개변수로 배열 객체를 안 넣으면 함수를 계속 호출하는 에러가 난다
@@ -60,9 +61,22 @@ const Contents = () => {
         datasets: [
           {
             label: '월별 격리자 현황',
-            backgroundColor: 'salmon',
+            borderColor: 'salmon',
             fill: false /* 그래프에 색을 채울지 말지 설정 */,
             data: arr.map((a) => a.active),
+          },
+        ],
+      });
+      const last = arr[arr.length - 1];
+      setComparedData({
+        labels: ["확진자", "격리해제", "사망"],
+        datasets: [
+          {
+            label: "누적 확진, 해제, 사망 비율",
+            backgroundColor: ["#ff3d67", "#059bff", "#ffc233"],
+            borderColor: ["#ff3d67", "#059bff", "#ffc233"],
+            fill: false /* 그래프에 색을 채울지 말지 설정 */,
+            data: [last.confirmed, last.recovered, last.death]
           },
         ],
       });
@@ -109,6 +123,21 @@ const Contents = () => {
               },
             }}
           ></Line>
+          <Doughnut
+            data={comparedData}
+            options={{
+              title: {
+                display: true,
+                text: `누적 확진, 해제, 사망 (${new Date().getMonth() + 1}월)`,
+                fontSize: 16,
+              },
+              legend: {
+                display: true,
+                position: "bottom",
+              },
+            }}
+          ></Doughnut>
+
         </div>
       </div>
     </section>

@@ -6,7 +6,7 @@ const Contents = () => {
   // useState를 쓸 때 [ 데이터명, 세팅을 해주는 메서드 ] 이렇게 적는다.
   // 배열 구조분해
   const [confirmedData, setConfirmedData] = useState({});
-  // const [quarantinedData, setQuarantinedData] = useState({});
+  const [quarantinedData, setQuarantinedData] = useState({});
 
   // 클래스에서 마운트가 됐을 때 바로 메서드를 실행하는 효과를 위해 useEffect를 사용함
   // ! useEffect()에 두 번째 매개변수로 배열 객체를 안 넣으면 함수를 계속 호출하는 에러가 난다
@@ -55,17 +55,17 @@ const Contents = () => {
           },
         ],
       });
-      // setQuarantinedData({
-      //   labels,
-      //   datasets: [
-      //     {
-      //       label: '월별 격리자 현황',
-      //       backgroundColor: 'salmon',
-      //       fill: false /* 그래프에 색을 채울지 말지 설정 */,
-      //       data: arr.map((a) => a.active),
-      //     },
-      //   ],
-      // });
+      setQuarantinedData({
+        labels,
+        datasets: [
+          {
+            label: '월별 격리자 현황',
+            backgroundColor: 'salmon',
+            fill: false /* 그래프에 색을 채울지 말지 설정 */,
+            data: arr.map((a) => a.active),
+          },
+        ],
+      });
     };
     const fetchEvents = async () => {
       const res = await axios.get(
@@ -95,7 +95,7 @@ const Contents = () => {
               },
             }}
           ></Bar>
-          {/* <Line
+          <Line
             data={quarantinedData}
             options={{
               title: {
@@ -108,7 +108,7 @@ const Contents = () => {
                 position: "bottom",
               },
             }}
-          ></Line> */}
+          ></Line>
         </div>
       </div>
     </section>

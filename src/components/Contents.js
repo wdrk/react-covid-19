@@ -6,8 +6,10 @@ const Contents = () => {
   // useState를 쓸 때 [ 데이터명, 세팅을 해주는 메서드 ] 이렇게 적는다.
   // 배열 구조분해
   const [confirmedData, setConfirmedData] = useState({});
+  // const [quarantinedData, setQuarantinedData] = useState({});
 
   // 클래스에서 마운트가 됐을 때 바로 메서드를 실행하는 효과를 위해 useEffect를 사용함
+  // ! useEffect()에 두 번째 매개변수로 배열 객체를 안 넣으면 함수를 계속 호출하는 에러가 난다
   useEffect(() => {
     const makeData = (items) => {
       const arr = items.reduce((acc, cur) => {
@@ -15,17 +17,12 @@ const Contents = () => {
         const year = currentData.getFullYear();
         const month = currentData.getMonth();
         const date = currentData.getDate();
-        // const {
-        //   Confirmed: confirmed,
-        //   Active: active,
-        //   Death: death,
-        //   Recovered: recovered,
-        // } = cur;
-        const confirmed = cur.Confirmed;
-        const active = cur.Acrive;
-        const death = cur.Death;
-        const recovered = cur.Recovered;
-        console.log(cur, year, month, date);
+        const {
+          Confirmed: confirmed,
+          Active: active,
+          Death: death,
+          Recovered: recovered,
+        } = cur;
 
         const findItem = acc.find((a) => a.year === year && a.month === month);
 
@@ -58,6 +55,17 @@ const Contents = () => {
           },
         ],
       });
+      // setQuarantinedData({
+      //   labels,
+      //   datasets: [
+      //     {
+      //       label: '월별 격리자 현황',
+      //       backgroundColor: 'salmon',
+      //       fill: false /* 그래프에 색을 채울지 말지 설정 */,
+      //       data: arr.map((a) => a.active),
+      //     },
+      //   ],
+      // });
     };
     const fetchEvents = async () => {
       const res = await axios.get(
@@ -67,7 +75,7 @@ const Contents = () => {
     };
 
     fetchEvents();
-  });
+  }, []);
   return (
     <section>
       <h2>국내 코로나 현황</h2>
@@ -75,17 +83,32 @@ const Contents = () => {
         <div>
           <Bar
             data={confirmedData}
-            options={
-              ({
-                title: {
-                  display: true,
-                  text: '누적 확진자 추이',
-                  fontSize: 16,
-                },
+            options={{
+              title: {
+                display: true,
+                text: "누적 확진자 추이",
+                fontSize: 16,
               },
-              { legend: { display: true, position: 'bottom' } })
-            }
+              legend: {
+                display: true,
+                position: "bottom",
+              },
+            }}
           ></Bar>
+          {/* <Line
+            data={quarantinedData}
+            options={{
+              title: {
+                display: true,
+                text: "월별 격리자 현황",
+                fontSize: 16,
+              },
+              legend: {
+                display: true,
+                position: "bottom",
+              },
+            }}
+          ></Line> */}
         </div>
       </div>
     </section>

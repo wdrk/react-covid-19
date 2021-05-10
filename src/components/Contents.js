@@ -51,7 +51,7 @@ const Contents = () => {
           {
             label: '국내 누적 확진자',
             backgroundColor: 'salmon',
-            fill: true /* 그래프에 색을 채울지 말지 설정 */,
+            fill: true, /* 그래프에 색을 채울지 말지 설정 */
             data: arr.map((a) => a.confirmed),
           },
         ],
@@ -61,8 +61,9 @@ const Contents = () => {
         datasets: [
           {
             label: '월별 격리자 현황',
+            backgroundColor: 'salmon',
             borderColor: 'salmon',
-            fill: false /* 그래프에 색을 채울지 말지 설정 */,
+            fill: false,
             data: arr.map((a) => a.active),
           },
         ],
@@ -75,7 +76,7 @@ const Contents = () => {
             label: "누적 확진, 해제, 사망 비율",
             backgroundColor: ["#ff3d67", "#059bff", "#ffc233"],
             borderColor: ["#ff3d67", "#059bff", "#ffc233"],
-            fill: false /* 그래프에 색을 채울지 말지 설정 */,
+            fill: false,
             data: [last.confirmed, last.recovered, last.death]
           },
         ],
@@ -105,7 +106,7 @@ const Contents = () => {
               },
               legend: {
                 display: true,
-                position: "bottom",
+                align: "bottom",
               },
             }}
           ></Bar>
@@ -119,7 +120,7 @@ const Contents = () => {
               },
               legend: {
                 display: true,
-                position: "bottom",
+                align: "bottom",
               },
             }}
           ></Line>
@@ -133,7 +134,7 @@ const Contents = () => {
               },
               legend: {
                 display: true,
-                position: "bottom",
+                align: "bottom",
               },
             }}
           ></Doughnut>
